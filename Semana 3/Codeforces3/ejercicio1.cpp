@@ -1,138 +1,39 @@
 #include <iostream>
-#include <unordered_map>
-#include <list>
+#include <string>
 
 template<typename T>
 class doublelinkedlist{
     struct Node{
-        T* data;
-        Node * next = nullptr;
-        Node * prev = nullptr;
+        T data;
+        Node* next;
+        Node* prev;
 
-        Node(const T& value): data(new T(value)){}
-        ~Node(){delete data;}
-    };
-    Node * head = nullptr;
-    Node * tail = nullptr;
-    std::unordered_map<T, Node*> list;
-
+        Node(const T& val, Node* p, Node* n) : data (val), next(n), prev(p) {}
+    }
+    Node * head;
+    Node * tail;
     public:
-
-    Node* insert (const T& value){
-        Node* nhead = new Node(value);
-        nhead->prev = nullptr;
-        nhead->next = head;
-
-        if(head!=nullptr){
-            head->prev = nhead;
-        }else{
-            tail = nhead;
-        }
-        
-        head = nhead;
-
-        index[value].push_back(nhead);
-
-        return head;
-    }
-/*
-    bool deletex(T& x){
-        Node* curr = head;
-        while (curr != nullptr){
-            if(*(curr->data) == x){
-                if (curr->prev != nullptr){
-                    curr->prev->next = curr->next;
-                }else{
-                    head = curr->next;
-                }
-
-                if (curr->next != nullptr){
-                    curr->next->prev = curr->prev;
-                }else{
-                    tail = curr->prev;
-                }
-                delete curr;
-                return true;
+        void insert(const T& val){
+            Node* newNode = new Node(val, nullptr, head);
+            if (head != nullptr){
+                head->prev = newNode;
+            }else{
+                tail = newNode;
             }
-            curr = curr->next;
+            head = newNode;
         }
-        return false;
-    }
 
-*/
-
-    bool deletex(const T& x){
-        auto it = list.find(x);
-        if (it == list.end() || it->second.empty())return false;
-
-        Node* curr = it->second.front();
-        it->second.pop_front();
-        if(it->second.empty())index.erase(it);
-
-        if (curr->prev != nullptr){
-            curr->prev->next = curr->next;
-        }else{
-            head = curr->next;
-        }
-        
-        if (curr->head != nullptr){
-            curr->next->prev = curr->prev;
-        }else{
-            tail = curr->prev;
-        }
-        delete curr;
-        return true;
-
-    }
-/*
-    Node* deleteFirst(){
-        Node* temp = head;
-        if(head == nullptr){
-            return nullptr;
-        }else if(head->next == nullptr){
-            delete head;
-
-            head = nullptr;
-            tail = nullptr;
-
-            return nullptr;
-        }else{
-            head = temp->next;
-            head->prev = nullptr;
-            delete temp;
-        }
-        return head;
-    }
-
-    Node* deleteLast(){
-        Node* temp = tail;
-        if(tail == nullptr){
-            return nullptr;
-        }else if(tail->prev == nullptr){
-            delete tail;
-            head = nullptr;
-            tail = nullptr;
-        }else{
-            tail = temp->prev;
-            tail->next = nullptr;
-            delete temp;
-        }
-        return tail;
-    }
-
-    void print(){
-        Node* curr = head;
-        while(curr != nullptr){
-            std::cout << *(curr->data);
-            if (curr->next != nullptr){
-                std::cout << " ";
+        void deletex(const T& val){
+            if (head == nullptr)return;
+            Node* curr = head;
+            while(curr!= nullptr){
+                if (curr->data == val){}
+                    unlink(curr);
+                }
             }
-            curr = curr->next;
         }
-        std::cout << std::endl;
-    }
-};
-*/
+}
+
 int main(){
     int n;
     std::cin >> n;

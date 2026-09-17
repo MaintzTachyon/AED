@@ -1,7 +1,3 @@
-#include <iostream>
-#include <initializer_list>
-#include <utility>
-
 template<typename T>
 class linked_list{
     struct Node{
@@ -89,6 +85,7 @@ class linked_list{
             curr->next = nullptr;
         }
 
+        //valida si existe el valor a buscar
         bool search(const T& val){
             Node* curr = head;
 
@@ -97,6 +94,19 @@ class linked_list{
                 curr = curr->next;
             }
             return false;
+        }
+
+        //muestra el valor a buscar en caso que exista
+        T* find(const T& val){
+            Node* curr = head;
+
+            while (curr != nullptr){
+                if(curr->data == val){
+                    return &curr->data;
+                }
+                curr = curr->next;
+            }
+            return nullptr;
         }
 
         bool removeX(const T& x){
@@ -113,7 +123,7 @@ class linked_list{
             Node* prev = head;
             Node* curr = head->next;
 
-            while(curr != nullptr && curr->data != x){
+            while(curr != nullptr && !(curr->data == x)){
                 prev = curr;
                 curr = curr->next;
             }
@@ -144,7 +154,7 @@ class linked_list{
             
             Node* curr = head;
 
-            while (curr != nullptr && curr->data != ref){
+            while (curr != nullptr && !(curr->data == ref)){
                 curr = curr->next;
             }
 

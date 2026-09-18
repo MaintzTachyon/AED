@@ -19,7 +19,7 @@ class HashTable{
     public:
 
     HashTable(int n){
-        if (bucket == 0) throw std::invalid_argument("The number of buckets must be greater than 0");
+        if (n <= 0) throw std::invalid_argument("The number of buckets must be greater than 0");
         bucket = n;
         table = std::vector<std::vector<int>>(n);
         Nelements = 0;
@@ -29,7 +29,7 @@ class HashTable{
         int index = hashFunction(key);
 
         if(std::find(table[index].begin(), table[index].end(),key) == table[index].end()){
-            table[index].insert(table[index].begin(), key);
+            table[index].push_back(key);
             Nelements++;
         }
     }
